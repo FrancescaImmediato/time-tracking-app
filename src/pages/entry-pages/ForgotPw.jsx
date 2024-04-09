@@ -18,10 +18,13 @@ export default function ForgotPw() {
             background-color: #9dc183;
             margin: 0; 
             height: 100vh; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         `}
       </style>
-      <Paper sx={{ maxWidth: 345, display: 'flex', flexDirection: 'column', backgroundColor: 'rgba(255, 255, 255, 0.5)', 
+      <Paper sx={{ maxWidth: 345, display: 'flex', flexDirection: 'column', padding: '0rem 2rem 4rem 2rem', backgroundColor: 'rgba(255, 255, 255, 0.5)', 
         backdropFilter: 'blur(10px)' }} elevation={24} square={false}>
         <CardMedia
           component="img"
