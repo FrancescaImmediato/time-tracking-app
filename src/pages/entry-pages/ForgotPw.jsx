@@ -1,82 +1,164 @@
-import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Stack from '@mui/joy/Stack';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import epochLogo from '../../assets/epochLogo.png';
-import Paper from '@mui/material/Paper';
 
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
+export default function ForgotPassword() {
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [step, setStep] = useState(1); // 1 = email input, 2 = code input, 3 = new password
+  const [message, setMessage] = useState(''); // Message to display
 
-export default function ForgotPw() {
+  // Checks if the email is valid
+  const emailTest = /\S+@\S+\.\S+/.test(email);
+  // Checks if the passwords match
+  const passwordTest = newPassword === confirmPassword;
+
+  // Handles input changes and saves it to state
+  const handleChange = (setState) => (event) => {
+    setState(event.target.value);
+  };
+
+  // Handles form submission for email input
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (emailTest) {
+      console.log('Code sent to:', email);
+      setStep(2); // Move to code input step
+      setMessage(''); // Clear any previous message
+    } else {
+      setMessage('Please enter a valid email address');
+    }
+  };
+
+  // Handles form submission for code input
+  const handleCodeSubmit = (e) => {
+    e.preventDefault();
+    if (code === '1234') { // Replace with your code validation logic
+      console.log('Code is correct');
+      setStep(3); // Move to new password step
+      setMessage(''); // Clear any previous message
+    } else {
+      setMessage('Invalid code');
+    }
+  };
+
+  // Handles form submission for new password
+  const handleNewPasswordSubmit = (e) => {
+    e.preventDefault();
+    if (passwordTest) {
+      setMessage('New password set');
+      // Redirect to a different page or perform any other necessary actions
+    } else {
+      setMessage('Passwords do not match');
+    }
+  };
+
   return (
-    <>
-    <style>
-        {`
-          body {
-            background-color: #9dc183;
-            margin: 0; 
-            height: 100vh; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        `}
-      </style>
-      <Paper sx={{ maxWidth: 345, display: 'flex', flexDirection: 'column', padding: '0rem 2rem 4rem 2rem', backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-        backdropFilter: 'blur(10px)' }} elevation={24} square={false}>
-        <CardMedia
-          component="img"
-          sx={{ height: 140 }}
-          image={epochLogo}
-          alt="Epoch"
-        />
-        <CardContent>
-         
-          <Typography gutterBottom variant="h5" component="div">
-            Forgot Password
-          </Typography>
-          <form
-            action=""
-            onSubmit={(event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              alert(JSON.stringify(formJson));
-            }}
-          >
-            <Stack spacing={1}>
-              <Input
-                type="email"
-                placeholder="Type your email here"
-                variant="plain"
-                size="md"
-                required
-                sx={{
-                  '&::before': {
-                    border: '1.5px solid var(--Input-focusedHighlight)',
-                    transform: 'scaleX(0)',
-                    left: '2.5px',
-                    right: '2.5px',
-                    bottom: 0,
-                    top: 'unset',
-                    transition: 'transform .15s cubic-bezier(0.1,0.9,0.2,1)',
-                    borderRadius: 0,
-                    borderBottomLeftRadius: '64px 20px',
-                    borderBottomRightRadius: '64px 20px',
-                  },
-                  '&:focus-within::before': {
-                    transform: 'scaleX(1)',
-                  },
-                }}
-              />
-              <Button>Request New Password</Button>
-            
-            </Stack>
-          </form>
-        </CardContent>
-      </Paper>
-    </>
+    <div className="hero is-fullheight">
+      <div className="hero-body">
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-half">
+              <div className="box">
+                <h1 className="title is-4 has-text-centered">Password Reset</h1>
+                {message && (
+                  <div className="notification is-danger">
+                    {message}
+                  </div>
+                )}
+                {step === 1 && (
+                  <form onSubmit={handleEmailSubmit}>
+                    <div className="field">
+                      <label className="label">Email</label>
+                      <div className="control has-icons-left">
+                        <input
+                          className="input"
+                          type="email"
+                          placeholder="Email Address"
+                          value={email}
+                          onChange={handleChange(setEmail)}
+                        />
+                      </div>
+                    </div>
+
+                    <buttons> 
+                    <button className="button is-primary is-fullwidth" type="submit">Send Code</button>
+                    <Link to="/Login" className="button is-primary is-fullwidth is-outlined">Return to Login</Link>
+                    </buttons>
+
+                  </form>
+                )}
+                {step === 2 && (
+                  <form onSubmit={handleCodeSubmit}>
+                    <div className="field">
+                      <label className="label">Enter Code</label>
+                      <div className="control has-icons-left">
+                        <input
+                          className="input"
+                          type="text"
+                          placeholder="Code"
+                          value={code}
+                          onChange={handleChange(setCode)}
+                        />
+                      </div>
+                    </div>
+                    <div className="field">
+                      <div className="control">
+                        <button className="button is-primary is-fullwidth" type="submit">
+                          Verify Code
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
+                {step === 3 && (
+                  <form onSubmit={handleNewPasswordSubmit}>
+                    <div className="field">
+                      <label className="label">New Password</label>
+                      <div className="control has-icons-left">
+                        <input
+                          className="input"
+                          type="password"
+                          placeholder="New Password"
+                          value={newPassword}
+                          onChange={handleChange(setNewPassword)}
+                        />
+                        <span className="icon is-small is-left">
+                          <i className="fas fa-lock"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="field">
+                      <label className="label">Confirm Password</label>
+                      <div className="control has-icons-left">
+                        <input
+                          className={`input ${passwordTest ? '' : 'is-danger'}`}
+                          type="password"
+                          placeholder="Confirm Password"
+                          value={confirmPassword}
+                          onChange={handleChange(setConfirmPassword)}
+                        />
+                        <span className="icon is-small is-left">
+                          <i className="fas fa-lock"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <div className="field">
+                      <div className="control">
+                        <button className="button is-primary is-fullwidth" type="submit">
+                          Change Password
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,160 +1,121 @@
-import { useState } from 'react';
-import Input from '@mui/joy/Input';
-import Button from '@mui/joy/Button';
-import Stack from '@mui/joy/Stack';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import epochLogo from '../../assets/epochLogo.png';
-import Paper from '@mui/material/Paper';
 
 export default function Register() {
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  
-   return (  
-      <>
-      <style>
-          {`
-            body {
-              background-color: #9dc183;
-              margin: 0; 
-              height: 100vh; 
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-          `}
-        </style>
-        <Paper sx={{ maxWidth: 345, display: 'flex', flexDirection: 'column', padding:'0rem 1rem 3rem 1rem', backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-          backdropFilter: 'blur(10px)' }} elevation={12} square={false}>
-          <CardMedia
-            component="img"
-            sx={{ height: 225 }}
-            image={epochLogo}
-            alt="Epoch"
-            margin="0"
-          />
-          <CardContent>
-          <Typography>Welcome to Epoch</Typography>
-            <Typography gutterBottom variant="h5" component="div">
-              Create Your Account
-            </Typography>
-            <form
-               action=""
-               onSubmit={(event) => {
-                  event.preventDefault();
 
-                  // Validate the email
-                  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                  if (!emailRegex.test(email)) {
-                     setEmailError('Please use a valid email');
-                     return;
-                  }
-                  setEmailError('');
+  // Checks if the email is valid
+  const emailTest = /\S+@\S+\.\S+/.test(email);
 
-                  // Validate the passwords
-                  if (password !== confirmPassword) {
-                     setPasswordError('Passwords do not match');
-                     return;
-                  }
-                  setPasswordError('');
+  // Checks if the passwords match
+  const passwordTest = password === confirmPassword;
 
-                  // Process the form data
-                  const formData = new FormData(event.currentTarget);
-                  const formJson = Object.fromEntries(formData.entries());
-                  alert(JSON.stringify(formJson));
-               }}
-               >
-              <Stack spacing={1}>
-                <Input
-                  type="email"
-                  placeholder="Type your email here"
-                  variant="plain"
-                  size="md"
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  required
-                  sx={{
-                    '&::before': {
-                      border: '1.5px solid var(--Input-focusedHighlight)',
-                      transform: 'scaleX(0)',
-                      left: '2.5px',
-                      right: '2.5px',
-                      bottom: 0,
-                      top: 'unset',
-                      transition: 'transform .15s cubic-bezier(0.1,0.9,0.2,1)',
-                      borderRadius: 0,
-                      borderBottomLeftRadius: '64px 20px',
-                      borderBottomRightRadius: '64px 20px',
-                    },
-                    '&:focus-within::before': {
-                      transform: 'scaleX(1)',
-                    },
-                  }}
-                />
-                {emailError && (<Typography color="error">{emailError}</Typography>)}
-                <Input
-                  type="password"
-                  placeholder="Set Password"
-                  variant="plain"
-                  size="md"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  required
-                  sx={{
-                    '&::before': {
-                      border: '1.5px solid var(--Input-focusedHighlight)',
-                      transform: 'scaleX(0)',
-                      left: '2.5px',
-                      right: '2.5px',
-                      bottom: 0,
-                      top: 'unset',
-                      transition: 'transform .15s cubic-bezier(0.1,0.9,0.2,1)',
-                      borderRadius: 0,
-                      borderBottomLeftRadius: '64px 20px',
-                      borderBottomRightRadius: '64px 20px',
-                    },
-                    '&:focus-within::before': {
-                      transform: 'scaleX(1)',
-                    },
-                  }}
-                />
-                <Input
-                  type="password"
-                  placeholder="Confirm Password"
-                  variant="plain"
-                  size="md"
-                  value={confirmPassword}
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-                  required
-                  sx={{
-                    '&::before': {
-                      border: '1.5px solid var(--Input-focusedHighlight)',
-                      transform: 'scaleX(0)',
-                      left: '2.5px',
-                      right: '2.5px',
-                      bottom: 0,
-                      top: 'unset',
-                      transition: 'transform .15s cubic-bezier(0.1,0.9,0.2,1)',
-                      borderRadius: 0,
-                      borderBottomLeftRadius: '64px 20px',
-                      borderBottomRightRadius: '64px 20px',
-                    },
-                    '&:focus-within::before': {
-                      transform: 'scaleX(1)',
-                    },
-                  }}
-                />
-                 {passwordError && (<Typography color="error">{passwordError}</Typography>)}
-                 <Button type='submit' disabled={Boolean(passwordError) || Boolean(emailError)}>Create Account</Button>
-              </Stack>
-            </form>
-          </CardContent>
-        </Paper>
-      </>
-    );
+  // Handles input changes and saves it to state
+  const handleChange = (setState) => (event) => {
+    setState(event.target.value);
+  };
+
+  // Handles form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (passwordTest && emailTest) {
+      console.log('Registered!');
+    } else {
+      console.log('Passwords do not match or email is invalid');
+    }
+  };
+
+  return (
+    
+    <div className="hero is-fullheight">
+      <div className="hero-body">
+        <div className="container">
+          <div className="columns is-centered">
+            <div className="column is-half">
+              <div className="box">
+                <h1 className="title is-4 has-text-centered">Register</h1>
+                <form onSubmit={handleSubmit}>
+                  <div className="field">
+                    <label className="label">Email</label>
+                    <div className="control has-icons-left">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="Email Address"
+                        value={email}
+                        onChange={handleChange(setEmail)}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">First Name</label>
+                    <div className="control has-icons-left">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="First Name"
+                        value={firstName}
+                        onChange={handleChange(setFirstName)}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Last Name</label>
+                    <div className="control has-icons-left">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChange={handleChange(setLastName)}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Password</label>
+                    <div className="control has-icons-left">
+                      <input
+                        className="input"
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={handleChange(setPassword)}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Confirm Password</label>
+                    <div className="control has-icons-left">
+                      <input
+                        className={`input ${passwordTest ? '' : 'is-danger'}`}
+                        type="password"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={handleChange(setConfirmPassword)}
+                      />
+                    </div>
+                  </div>
+                  <div className="field">
+                    <div className="control">
+                      <button className="button is-primary is-fullwidth" type="submit">
+                        Create Account
+                      </button>
+                      <Link to="/Login" className="button is-primary is-fullwidth is-outlined">
+                        Return to Login
+                      </Link>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );  
 }
