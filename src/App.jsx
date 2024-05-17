@@ -3,6 +3,7 @@ import ForgotPw from './pages/entry-pages/ForgotPw'
 import Login from './pages/entry-pages/Login'
 import NewPw from './pages/entry-pages/NewPw'
 import Register from './pages/entry-pages/Register'
+import ProjectsPage from './pages/ProjectsPage'
 import 'bulma/css/bulma.min.css';
 /* import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -22,8 +23,9 @@ export default function App () {
           <Route path='/NewPw' element={<NewPw/>}></Route>
           <Route path='/Register' element={<Register/>}></Route>
           <Route path='/ForgotPw' element={<ForgotPw/>}></Route>
+          <Route path='/Projects' element={<ProjectsPage/>}></Route>
         </Routes>
       </BrowserRouter>
-    </div>
+     </div>
   )
 }
