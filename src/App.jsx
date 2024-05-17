@@ -3,6 +3,7 @@ import ForgotPw from './pages/entry-pages/ForgotPw'
 import Login from './pages/entry-pages/Login'
 import NewPw from './pages/entry-pages/NewPw'
 import Register from './pages/entry-pages/Register'
+import 'bulma/css/bulma.min.css';
 /* import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
