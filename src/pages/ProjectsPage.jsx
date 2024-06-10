@@ -1,30 +1,68 @@
-import { useState } from 'react'
-import Navbar from '../components/NavBar'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import Navbar from '../components/NavBar';
 
 export default function ProjectsPage() {
   const [showModal, setShowModal] = useState(false);
   const [newProjectName, setNewProjectName] = useState('');
   const [projects, setProjects] = useState([]);
 
-  function handleCreateProject (){
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get('/api/projects');
+        setProjects(response.data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  const handleCreateProject = async () => {
     if (newProjectName.trim()) {
-      setProjects([...projects, { name: newProjectName, totalHours: 0 }]);
-      setNewProjectName('');
-      setShowModal(false);
+      try {
+        const response = await axios.post('/api/projects', { name: newProjectName, totalHours: 0 });
+        setProjects([...projects, response.data]);
+        setNewProjectName('');
+        setShowModal(false);
+      } catch (error) {
+        console.error('Error creating project:', error);
+      }
     }
-  }
+  };
+
+  const handleUpdateProject = async (id, updatedProject) => {
+    try {
+      const response = await axios.put(`/api/projects/${id}`, updatedProject);
+      setProjects(projects.map((project) => (project.id === id ? response.data : project)));
+    } catch (error) {
+      console.error('Error updating project:', error);
+    }
+  };
+
+  const handleDeleteProject = async (id) => {
+    try {
+      await axios.delete(`/api/projects/${id}`);
+      setProjects(projects.filter((project) => project.id !== id));
+    } catch (error) {
+      console.error('Error deleting project:', error);
+    }
+  };
+
   const containerStyle = {
-   maxWidth: '100%',
-   padding: '0 1rem',
-   '@media (min-width: 769px)': {
-     maxWidth: 'none',
-     padding: '0',
-   },
- };
+    maxWidth: '100%',
+    padding: '0 1rem',
+    '@media (min-width: 769px)': {
+      maxWidth: 'none',
+      padding: '0',
+    },
+  };
 
   return (
-    <div className="container" styles={containerStyle}>
-      < Navbar/>
+    <div className="container" style={containerStyle}>
+      <Navbar />
       <div className="level">
         <div className="level-left">
           <h1 className="title">Projects</h1>
@@ -42,13 +80,22 @@ export default function ProjectsPage() {
             <tr>
               <th>Name</th>
               <th>Total Hours Tracked</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {projects.map((project, index) => (
-              <tr key={index}>
+            {projects.map((project) => (
+              <tr key={project.id}>
                 <td>{project.name}</td>
                 <td>{project.totalHours}</td>
+                <td>
+                  <button className="button is-info mr-2" onClick={() => handleUpdateProject(project.id, { name: 'Updated Project Name' })}>
+                    Update
+                  </button>
+                  <button className="button is-danger" onClick={() => handleDeleteProject(project.id)}>
+                    Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

@@ -27,14 +27,14 @@ export default function Navbar() {
 
       <div id="navbar" className="navbar-menu">
         <div className="navbar-end">
-          <a className="navbar-item" href="/">
-            Home
+          <a className="navbar-item" href="/Login">
+            Login
           </a>
           <a className="navbar-item" href="/projects">
             Projects
           </a>
-          <a className="navbar-item" href="/">
-            Page 1
+          <a className="navbar-item" href="/Tracker">
+            Time Tracker
           </a>
           <a className="navbar-item" href="/">
             Page 2
