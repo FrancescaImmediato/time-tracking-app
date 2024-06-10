@@ -6,6 +6,7 @@ import Register from './pages/entry-pages/Register'
 import ProjectsPage from './pages/ProjectsPage'
 import UsersPage from './pages/UsersPage'
 import 'bulma/css/bulma.min.css'
+// import axios from 'axios'
 import TimeTrackerPage from './pages/TimeTrackerPage'
 /* import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
@@ -27,7 +28,7 @@ export default function App () {
           <Route path='/ForgotPw' element={<ForgotPw/>}></Route>
           <Route path='/Projects' element={<ProjectsPage/>}></Route>
           <Route path='/Users' element={<UsersPage/>}></Route>
-          <Route path="Tracker" element={<TimeTrackerPage/>}></Route>
+          <Route path='/Tracker' element={<TimeTrackerPage/>}></Route>
         </Routes>
       </BrowserRouter>
      </div>

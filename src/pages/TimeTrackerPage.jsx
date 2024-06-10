@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Navbar from '../components/NavBar';
 
 
@@ -222,7 +222,7 @@ export default function TimeTrackerPage (){
 
 
 
-{/* WHAT THIS WILL LOOK LIKE ON MOBILE- i know there is a better way but i was unsure how to do it so i created 2 seperate tables */}
+{/* WHAT THIS WILL LOOK LIKE ON MOBILE- i know there is a better way but i was unsure how to do it so i created 2 seprate tables */}
 
 
 <table className="table is-hidden-desktop is-fullwidth-mobile">
@@ -300,4 +300,4 @@ export default function TimeTrackerPage (){
       </div>
     </div>
   );
-};   
+}   
