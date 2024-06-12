@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import epochLogo from '/src/assets/epochLogo.png';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -20,7 +21,9 @@ export default function LoginPage() {
 
   return (
     <div className="hero is-fullheight">
-      <div className="hero-body">
+<img src={epochLogo} alt="EPOCH" zindex={1}  />
+      <h1 zindex={3}>Time well spent starts here...</h1>
+      <div className="hero-body" zindex={2}>
         <div className="container">
           <div className="columns is-centered">
             <div className="column is-half">
@@ -61,12 +64,12 @@ export default function LoginPage() {
                   </div>
 
 
-                  <buttons>
+                  <div className='buttons'>
                       <button className="button is-primary is-fullwidth" type="submit">
                         Login </button>
 
                       <Link to="/register" className="button is-primary is-fullwidth is-outlined">Create Account</Link>
-                  </buttons>
+                  </div>
                   
                 </form>
               </div>

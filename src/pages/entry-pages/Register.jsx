@@ -33,6 +33,7 @@ export default function Register() {
   return (
     
     <div className="hero is-fullheight">
+    
       <div className="hero-body">
         <div className="container">
           <div className="columns is-centered">

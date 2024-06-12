@@ -83,10 +83,10 @@ export default function ForgotPassword() {
                       </div>
                     </div>
 
-                    <buttons> 
-                    <button className="button is-primary is-fullwidth" type="submit">Send Code</button>
+                    <div className='buttons'> 
+                    <div className=git "button is-primary is-fullwidth" type="submit">Send Code</div>
                     <Link to="/Login" className="button is-primary is-fullwidth is-outlined">Return to Login</Link>
-                    </buttons>
+                    </div>
 
                   </form>
                 )}
