@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -14,6 +15,8 @@ export default function LoginPage() {
   };
 
   const handleSubmit = (e) => {
+    axios.post('http://localhost:3000/api/user/create', {email, password});
+
     e.preventDefault();
     console.log('Email:', email, 'Password:', password);
   };
